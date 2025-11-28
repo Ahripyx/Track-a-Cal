@@ -15,7 +15,7 @@ public class LoadingActivity extends AppCompatActivity {
 
         // Adding 3 second delay
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(LoadingActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoadingActivity.this, PrivacyPolicyActivity.class);
             startActivity(intent);
             finish();
         }, 3000);
