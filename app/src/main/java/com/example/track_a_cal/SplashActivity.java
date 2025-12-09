@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
+    private static final String PREFS = "trackacal_prefs";
+    private static final String KEY_PRIVACY_AGREED = "privacy_agreed";
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
