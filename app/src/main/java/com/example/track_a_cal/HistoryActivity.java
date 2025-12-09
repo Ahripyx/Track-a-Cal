@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ public class HistoryActivity extends AppCompatActivity {
     private ListView lvDates;
     private List<String> dates;
     private List<String> displayList;
+    private Button btnBackHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +33,13 @@ public class HistoryActivity extends AppCompatActivity {
 
         db = new DatabaseHelper(this);
         lvDates = findViewById(R.id.lvDates);
+        btnBackHistory = findViewById(R.id.btnBackHistory);
 
         // Load distinct dates
         dates = db.getDistinctDates();
         displayList = new ArrayList<>();
+
+        btnBackHistory.setOnClickListener(v -> finish());
 
         for (String date : dates) {
             int total = db.getTotalCaloriesForDate(date);
