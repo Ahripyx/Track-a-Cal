@@ -26,6 +26,7 @@ public class HistoryActivity extends AppCompatActivity {
     private List<String> displayList;
     private Button btnBackHistory;
 
+    // Load the list of dates, show totals, and handle selection/back
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -200,8 +200,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Save Entry"
-                android:backgroundTint="@color/black"
-                android:textColor="@android:color/white"
+                android:backgroundTint="#90CAF9"
+                android:textColor="#222"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="12dp"
                 android:textStyle="bold"/>
@@ -227,7 +227,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Back"
-            android:backgroundTint="@color/black"
-            android:textColor="@color/white"/>
+            android:backgroundTint="#90CAF9"
+            android:textColor="#222"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

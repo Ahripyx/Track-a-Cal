@@ -2,7 +2,6 @@ package com.example.track_a_cal.models;
 
 public class EntryItem {
 
-    // Private Properties
     private int id;
     private final String date;
     private final String title;
@@ -13,8 +12,7 @@ public class EntryItem {
     private final String serving;
     private final String mealCsv;
 
-    // Public Properties
-    public int getId() { return id; }
+    // Getters for the entry fields
     public String getDate() { return date; }
     public String getTitle() { return title; }
     public int getCalories() { return calories; }
@@ -24,8 +22,10 @@ public class EntryItem {
     public String getServing() { return serving; }
     public String getMealCsv() { return mealCsv; }
 
+    // Set the database id after inserting
     public void setId(int id) { this.id = id; }
 
+    // Full constructor with id
     public EntryItem(int id, String date, String title, int calories, int protein, int carbs, int fat, String serving, String mealCsv) {
         this.id = id;
         this.date = date;

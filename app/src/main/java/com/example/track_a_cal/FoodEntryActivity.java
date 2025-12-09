@@ -28,6 +28,7 @@ public class FoodEntryActivity extends AppCompatActivity {
     private DatabaseHelper dbHelper;
 
 
+    // Setting up the UI, preselect a meal if requested, and wire buttons
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -59,7 +60,6 @@ public class FoodEntryActivity extends AppCompatActivity {
             date = isoToday();
         }
 
-        // Preselect meal if requested
         String pre = intent.getStringExtra("preselectMeal");
         if (pre != null) {
             switch (pre) {
@@ -83,6 +83,7 @@ public class FoodEntryActivity extends AppCompatActivity {
         });
     }
 
+    // Validating inputs, building an EntryItem, and saving it to the database
     private void saveEntryToDb() {
         String title = etFoodName.getText().toString().trim();
         String calText = etCalories.getText().toString().trim();
@@ -140,6 +141,7 @@ public class FoodEntryActivity extends AppCompatActivity {
         sb.append(s);
     }
 
+    // Return today's date in ISO yyyy-MM-dd format
     private String isoToday() {
         return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Calendar.getInstance().getTime());
     }

@@ -29,6 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    // Create the entries table
     @Override
     public void onCreate(SQLiteDatabase db) {
         String sql = "CREATE TABLE " + TABLE_ENTRIES + " (" +
@@ -45,13 +46,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(sql);
     }
 
+    // Recreate the table on upgrade
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldV, int newV) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENTRIES);
         onCreate(db);
     }
 
-    // Insert an entry and return new row id
+    // Insert an entry and return the new row id
     public long insertEntry(EntryItem e) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -68,7 +70,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    // Get all entries for a given date
+    // Getting all entries for a given date
     public List<EntryItem> getEntriesForDate(String isoDate) {
         List<EntryItem> out = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
@@ -140,6 +142,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return sb.toString();
     }
 
+    // Get a list of distinct dates with entries
     public List<String> getDistinctDates() {
         List<String> out = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();

@@ -12,19 +12,19 @@ public class LoadingActivity extends AppCompatActivity {
     private static final String PREFS = "trackacal_prefs";
     private static final String KEY_PRIVACY_AGREED = "privacy_agreed";
 
+    // Displaying the loading UI, wait a bit, then open Main or PrivacyPolicy based on consent
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
 
-        // Adding 3 second delay
         new Handler().postDelayed(() -> {
             SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
             boolean agreed = prefs.getBoolean(KEY_PRIVACY_AGREED, false);
 
             Intent intent;
             if (agreed){
-                intent = new Intent(LoadingActivity.this, PrivacyPolicyActivity.class);
+                intent = new Intent(LoadingActivity.this, MainActivity.class);
             }
             else{
                 intent = new Intent(LoadingActivity.this, PrivacyPolicyActivity.class);

@@ -23,6 +23,7 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
         CheckBox agreeChk = findViewById(R.id.checkbox_agree);
         Button acceptBtn = findViewById(R.id.button_accept);
 
+        // full privacy policy text shown to the user
         StringBuilder sb = new StringBuilder();
         sb.append("Privacy Policy - Track-a-Cal\n\n");
         sb.append("Date: 2025-12-09\n\n");
@@ -76,9 +77,10 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
         sb.append("If you have questions about this policy, need help deleting data, or want to request changes, contact:\n\n");
         sb.append("Email: track-a-cal@gmail.com\n");
 
-        // Set the built text on the TextView
+        // Setting the built text on the TextView
         tvBody.setText(sb.toString());
 
+        // When Accept is tapped, save consent and move to the main screen
         acceptBtn.setOnClickListener(e -> {
             if (agreeChk.isChecked()) {
                 // Saving the privacy acceptance

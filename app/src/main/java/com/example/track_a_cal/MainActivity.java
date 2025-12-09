@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvTotalCalories;
     private Button btnEditGoal;
 
+    // Initialize UI, load prefs, and set up handlers
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,10 +101,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Refresh data each time the activity resumes
     @Override
     protected void onResume() {
         super.onResume();
-        // Read stored last_date in case HistoryActivity changed it
         SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
         String storedDate = prefs.getString(KEY_LAST_DATE, isoToday());
         if (!storedDate.equals(currentDate)) {
@@ -111,13 +112,12 @@ public class MainActivity extends AppCompatActivity {
             updateTitleWithDate();
         }
 
-        // refresh totals (in case entries were added/edited)
         refreshAll();
 
-        // persist last date (keeps behavior consistent)
         prefs.edit().putString(KEY_LAST_DATE, currentDate).apply();
     }
 
+    // Update the app title to include the selected date
     private void updateTitleWithDate() {
         String appName;
         try {
@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         tvAppTitle.setText(appName + " - " + currentDate);
     }
 
+    // Refresh totals, progress bar, and each meal section
     private void refreshAll() {
         // Total calories for the date
         int total = db.getTotalCaloriesForDate(currentDate);
@@ -149,19 +150,17 @@ public class MainActivity extends AppCompatActivity {
         updateMealSection("Snack", tvSnacksCalories, tvSnacksFoods);
     }
 
+    // Load and show calories and foods for a single meal
     private void updateMealSection(String meal, TextView tvCalories, TextView tvFoods) {
         int totalMeal = 0;
         String foods = "";
-        try {
-            totalMeal = db.getTotalCaloriesForMeal(currentDate, meal);
-            foods = db.getFoodsForMeal(currentDate, meal);
-        } catch (Exception ex) {
-            //ADD LATER: toast to tell user about error
-        }
+        totalMeal = db.getTotalCaloriesForMeal(currentDate, meal);
+        foods = db.getFoodsForMeal(currentDate, meal);
         tvCalories.setText("Calories: " + totalMeal);
         tvFoods.setText(foods);
     }
 
+    // Open FoodEntryActivity with a preselected meal value
     private void startFoodEntryWithMeal(String meal) {
         Intent intent = new Intent(this, FoodEntryActivity.class);
         intent.putExtra("date", currentDate);
@@ -169,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // Letting the user pick a date, then update and refresh the view
     private void showDatePicker() {
         Calendar c = Calendar.getInstance();
         try {
@@ -191,10 +191,12 @@ public class MainActivity extends AppCompatActivity {
         dp.show();
     }
 
+    // Return today's date in ISO yyyy-MM-dd format
     private String isoToday() {
         return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Calendar.getInstance().getTime());
     }
 
+    // Show a dialog to edit the daily calorie goal and save it
     private void showEditGoalDialog() {
         final SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
         int currentGoal = prefs.getInt(KEY_DAILY_GOAL, DEFAULT_DAILY_GOAL);
