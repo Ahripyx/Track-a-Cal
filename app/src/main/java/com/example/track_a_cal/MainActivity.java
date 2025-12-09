@@ -65,10 +65,9 @@ public class MainActivity extends AppCompatActivity {
         btnQuickAddSnack = findViewById(R.id.btnQuickAddSnack);
         btnHistory = findViewById(R.id.btnHistory);
 
-        // Restore last date or default to today
-        SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
-        currentDate = prefs.getString(KEY_LAST_DATE, isoToday());
-        int dailyGoal = prefs.getInt(KEY_DAILY_GOAL, DEFAULT_DAILY_GOAL);
+        currentDate = isoToday();
+        getSharedPreferences(PREFS, MODE_PRIVATE).edit().putString(KEY_LAST_DATE, currentDate).apply();
+        int dailyGoal = getSharedPreferences(PREFS, MODE_PRIVATE).getInt(KEY_DAILY_GOAL, DEFAULT_DAILY_GOAL);
 
         updateTitleWithDate();
 
