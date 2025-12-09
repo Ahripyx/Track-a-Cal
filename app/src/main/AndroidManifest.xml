@@ -15,6 +15,7 @@
         <activity android:name=".LoadingActivity"/>
         <activity android:name=".PrivacyPolicyActivity"/>
         <activity android:name=".FoodEntryActivity"/>
+        <activity android:name=".HistoryActivity" />
         <activity
             android:name=".SplashActivity"
             android:exported="true">

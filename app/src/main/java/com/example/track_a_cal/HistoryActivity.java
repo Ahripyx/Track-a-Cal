@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.track_a_cal.data.DatabaseHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryActivity extends AppCompatActivity {
@@ -20,6 +21,8 @@ public class HistoryActivity extends AppCompatActivity {
 
     private DatabaseHelper db;
     private ListView lvDates;
+    private List<String> dates;
+    private List<String> displayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,17 +32,23 @@ public class HistoryActivity extends AppCompatActivity {
         db = new DatabaseHelper(this);
         lvDates = findViewById(R.id.lvDates);
 
-        List<String> dates = db.getDistinctDates();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dates);
+        // Load distinct dates
+        dates = db.getDistinctDates();
+        displayList = new ArrayList<>();
+
+        for (String date : dates) {
+            int total = db.getTotalCaloriesForDate(date);
+            displayList.add(date + " — " + total + " kcal");
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, displayList);
         lvDates.setAdapter(adapter);
 
         lvDates.setOnItemClickListener((AdapterView<?> parent, android.view.View view, int position, long id) -> {
-            String date = dates.get(position);
+            String selectedDate = dates.get(position);
             SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
-            prefs.edit().putString(KEY_LAST_DATE, date).apply();
-
-            Toast.makeText(this, "Switched to " + date, Toast.LENGTH_SHORT).show();
-
+            prefs.edit().putString(KEY_LAST_DATE, selectedDate).apply();
+            Toast.makeText(this, "Switched to " + selectedDate, Toast.LENGTH_SHORT).show();
             finish();
         });
     }

@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvDinnerCalories, tvDinnerFoods;
     private TextView tvSnacksCalories, tvSnacksFoods;
     private Button btnQuickAddBreakfast, btnQuickAddLunch, btnQuickAddDinner, btnQuickAddSnack;
+    private Button btnHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         btnQuickAddLunch = findViewById(R.id.btnQuickAddLunch);
         btnQuickAddDinner = findViewById(R.id.btnQuickAddDinner);
         btnQuickAddSnack = findViewById(R.id.btnQuickAddSnack);
+        btnHistory = findViewById(R.id.btnHistory);
 
         // Restore last date or default to today
         SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
@@ -78,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Title click to pick date
         tvAppTitle.setOnClickListener(v -> showDatePicker());
+
+        btnHistory.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, HistoryActivity.class)));
 
         // Quick add buttons: open FoodEntryActivity with the meal preselected
         btnQuickAddBreakfast.setOnClickListener(e -> startFoodEntryWithMeal("Breakfast"));
