@@ -90,10 +90,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // refresh totals
+        // Read stored last_date in case HistoryActivity changed it
+        SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
+        String storedDate = prefs.getString(KEY_LAST_DATE, isoToday());
+        if (!storedDate.equals(currentDate)) {
+            currentDate = storedDate;
+            updateTitleWithDate();
+        }
+
+        // refresh totals (in case entries were added/edited)
         refreshAll();
-        // persist last date
-        getSharedPreferences(PREFS, MODE_PRIVATE).edit().putString(KEY_LAST_DATE, currentDate).apply();
+
+        // persist last date (keeps behavior consistent)
+        prefs.edit().putString(KEY_LAST_DATE, currentDate).apply();
     }
 
     private void updateTitleWithDate() {
