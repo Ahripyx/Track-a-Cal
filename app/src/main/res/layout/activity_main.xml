@@ -270,6 +270,19 @@
                     android:layout_marginLeft="20dp"
                     android:text=""/>
             </LinearLayout>
+
+            <View android:layout_width="match_parent" android:layout_height="8dp"/>
+
+            <TextView
+                android:id="@+id/tvTotalCalories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Total: 0 kcal"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/black" />
         </LinearLayout>
     </ScrollView>
 

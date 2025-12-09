@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private Button btnQuickAddBreakfast, btnQuickAddLunch, btnQuickAddDinner, btnQuickAddSnack;
     private Button btnHistory;
 
+    private TextView tvTotalCalories;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
         btnQuickAddDinner = findViewById(R.id.btnQuickAddDinner);
         btnQuickAddSnack = findViewById(R.id.btnQuickAddSnack);
         btnHistory = findViewById(R.id.btnHistory);
+
+        tvTotalCalories = findViewById(R.id.tvTotalCalories);
 
         currentDate = isoToday();
         getSharedPreferences(PREFS, MODE_PRIVATE).edit().putString(KEY_LAST_DATE, currentDate).apply();
@@ -121,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
     private void refreshAll() {
         // Total calories for the date
         int total = db.getTotalCaloriesForDate(currentDate);
+        tvTotalCalories.setText("Total: " + total + " kcal");
 
         int goal = getSharedPreferences(PREFS, MODE_PRIVATE).getInt(KEY_DAILY_GOAL, DEFAULT_DAILY_GOAL);
         int remaining = Math.max(0, goal - total);
