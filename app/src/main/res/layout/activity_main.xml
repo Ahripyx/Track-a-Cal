@@ -35,20 +35,39 @@
                 android:layout_marginBottom="14dp"
                 />
 
-            <!-- History button -->
-            <Button
-                android:id="@+id/btnHistory"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="History"
-                android:layout_gravity="center_horizontal"
-                android:backgroundTint="#90CAF9"
-                android:textColor="#222"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                android:layout_marginBottom="14dp"/>
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:paddingBottom="5dp">
 
-            <!-- Daily Goals Row -->
+                <!-- History button -->
+                <Button
+                    android:id="@+id/btnHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="History"
+                    android:backgroundTint="#90CAF9"
+                    android:textColor="#222"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:layout_marginEnd="8dp"
+                    android:textSize="15sp"/>
+
+                <!-- Edit Goal button -->
+                <Button
+                    android:id="@+id/btnEditGoal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="Edit Goal"
+                    android:backgroundTint="#90CAF9"
+                    android:textColor="#222"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"/>
+            </LinearLayout>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

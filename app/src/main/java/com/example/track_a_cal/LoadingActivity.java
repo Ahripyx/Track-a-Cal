@@ -24,7 +24,7 @@ public class LoadingActivity extends AppCompatActivity {
 
             Intent intent;
             if (agreed){
-                intent = new Intent(LoadingActivity.this, MainActivity.class);
+                intent = new Intent(LoadingActivity.this, PrivacyPolicyActivity.class);
             }
             else{
                 intent = new Intent(LoadingActivity.this, PrivacyPolicyActivity.class);

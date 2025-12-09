@@ -5,8 +5,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.content.Intent;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnHistory;
 
     private TextView tvTotalCalories;
+    private Button btnEditGoal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
         btnHistory = findViewById(R.id.btnHistory);
 
         tvTotalCalories = findViewById(R.id.tvTotalCalories);
+
+        btnEditGoal = findViewById(R.id.btnEditGoal);
+        btnEditGoal.setOnClickListener(v -> showEditGoalDialog());
 
         currentDate = isoToday();
         getSharedPreferences(PREFS, MODE_PRIVATE).edit().putString(KEY_LAST_DATE, currentDate).apply();
@@ -187,5 +193,44 @@ public class MainActivity extends AppCompatActivity {
 
     private String isoToday() {
         return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Calendar.getInstance().getTime());
+    }
+
+    private void showEditGoalDialog() {
+        final SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
+        int currentGoal = prefs.getInt(KEY_DAILY_GOAL, DEFAULT_DAILY_GOAL);
+
+        final EditText input = new EditText(this);
+        input.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+        input.setText(String.valueOf(currentGoal));
+        input.setSelectAllOnFocus(true);
+
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Edit Daily Goal")
+                .setMessage("Enter your daily calorie goal:")
+                .setView(input)
+                .setPositiveButton("Save", (dialog, which) -> {
+                    String s = input.getText().toString().trim();
+                    if (s.isEmpty()) {
+                        Toast.makeText(this, "Goal cannot be empty", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    try {
+                        int g = Integer.parseInt(s);
+                        if (g <= 0) throw new NumberFormatException();
+                        prefs.edit().putInt(KEY_DAILY_GOAL, g).apply();
+
+                        // update UI immediately
+                        tvDailyGoalVal.setText(String.valueOf(g));
+                        progressBarCalories.setMax(g);
+                        // refresh remaining/total/progress
+                        refreshAll();
+
+                        Toast.makeText(this, "Daily goal updated to " + g, Toast.LENGTH_SHORT).show();
+                    } catch (NumberFormatException ex) {
+                        Toast.makeText(this, "Enter a valid positive number", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 }
